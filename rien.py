@@ -1,4 +1,6 @@
 import random
+#solo un ultimo comentario
+#3er comentario
 #solo un comentarico
 
 ### len(P) = 32, simple permutacion
