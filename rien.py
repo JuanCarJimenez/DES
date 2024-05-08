@@ -1,4 +1,5 @@
 import random
+#solo un comentarico
 
 ### len(P) = 32, simple permutacion
 P= [16, 7, 20, 21, 29, 12, 28, 17, 
