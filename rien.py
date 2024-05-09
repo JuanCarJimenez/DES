@@ -1,6 +1,21 @@
 import random
 
-#######################################################   key_schedule
+def tobits(s):
+    result = []
+    for c in s:
+        bits = bin(ord(c))[2:]
+        bits = '00000000'[len(bits):] + bits
+        result.extend([int(b) for b in bits])
+    return result
+
+def frombits(bits):
+    chars = []
+    for b in range(len(bits) // 8):
+        byte = bits[b*8:(b+1)*8]
+        chars.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
+    return ''.join(chars)
+
+#######################################################   KEY_SCHEDULE
 
 PC1= [49, 41, 33, 25, 17, 9, 1,
         50, 42, 34, 26, 18, 10, 2,
@@ -198,22 +213,8 @@ def DES(text, keys): ## texto de 64p y 16 keys de 48
     my_text= permutation(my_text, P_I_I)
     return my_text
 
-######################################################################## programa
+######################################################################## PROGRAMA
 
-def tobits(s):
-    result = []
-    for c in s:
-        bits = bin(ord(c))[2:]
-        bits = '00000000'[len(bits):] + bits
-        result.extend([int(b) for b in bits])
-    return result
-
-def frombits(bits):
-    chars = []
-    for b in range(len(bits) // 8):
-        byte = bits[b*8:(b+1)*8]
-        chars.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
-    return ''.join(chars)
 
 #key=[0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1]
 key= [0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,1,0,1,1,1,0,1,0,1,0,0,1]
