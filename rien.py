@@ -2,15 +2,6 @@ import random
 
 #######################################################   key_schedule
 
-data_PC2= [1, 2, 3, 4, 5, 6, 7,
-            8, 9, 10, 11, 12, 13, 14,
-           15, 16, 17, 18, 19, 20, 21,
-           22, 23, 24, 25, 26, 27, 28,
-           29, 30, 31, 32, 33, 34, 35,
-           36, 37, 38, 39, 40, 41, 42,
-           43, 44, 45, 46, 47, 48, 49,
-           50, 51, 52, 53, 54, 55, 56]
-
 PC1= [49, 41, 33, 25, 17, 9, 1,
         50, 42, 34, 26, 18, 10, 2,
         51, 43, 35, 27, 19, 11, 3,
@@ -51,8 +42,7 @@ def key_sch(key):
     for i in range (1,17):
         list_L= l_shift(list_L, i)
         list_R= l_shift(list_R, i)
-        my_key= permutation((list_L + list_R), PC2) ## PC2(key)
-        keys.append(my_key)
+        keys.append(permutation((list_L + list_R), PC2)) ## PC2(key)
     return keys
 
 def random_key(length):
@@ -205,18 +195,40 @@ def DES(text, keys): ## texto de 64p y 16 keys de 48
         l_text, r_text = mu(l_text, r_text)
     l_text, r_text = phi(l_text, r_text, keys[15])
     my_text= l_text+r_text
-    my_text= permutation(text, P_I_I)
+    my_text= permutation(my_text, P_I_I)
     return my_text
 
-######################################################################## DES
+######################################################################## programa
+
+def tobits(s):
+    result = []
+    for c in s:
+        bits = bin(ord(c))[2:]
+        bits = '00000000'[len(bits):] + bits
+        result.extend([int(b) for b in bits])
+    return result
+
+def frombits(bits):
+    chars = []
+    for b in range(len(bits) // 8):
+        byte = bits[b*8:(b+1)*8]
+        chars.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
+    return ''.join(chars)
 
 #key=[0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1]
-key= (random_key(56))
+key= [0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,1,1,1,1,0,1,1,1,0,1,0,0,0,1,1,0,1,1,1,0,1,0,1,0,0,1]
+#key= (random_key(56))
 my_keys= key_sch(key)
-my_data= [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0]
 
-ciphertext= DES(my_data+my_data, my_keys)
-print(f"cifrado", ciphertext)
+message= tobits('abogados') ######## mensaje a encriptar
+my_data= [0,1,0,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,0,1,1,1,0]
+
+ciphertext= DES(message, my_keys)
+print(f"Tcifrado", ciphertext)
+print(f"Text cifrado", frombits(ciphertext))
 my_keys.reverse()
 deciphertext= DES(ciphertext, my_keys)
-print(f"descifr", deciphertext)
+
+deciphered_message= frombits(deciphertext)
+print(deciphered_message)
+
