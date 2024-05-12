@@ -6,6 +6,8 @@ def tobits(s):
         bits = bin(ord(c))[2:]
         bits = '00000000'[len(bits):] + bits
         result.extend([int(b) for b in bits])
+    while (len(result)%64!= 0):
+        result= result + [0,0,0,0,0,0,0,0]
     return result
 
 def frombits(bits):
@@ -164,7 +166,7 @@ def DES_encryption(data, key):
     for i in range(8):
         sbox_value= sboxes.get(f"sbox_{i+1}")
         my_string= my_string + substitution(my_data[6*i:(6*i)+6], sbox_value)
-    my_string= permutation(my_string, P)
+    my_string= permutation(my_string, P) #### P
     return my_string
 
 
@@ -213,6 +215,12 @@ def DES(text, keys): ## texto de 64p y 16 keys de 48
     my_text= permutation(my_text, P_I_I)
     return my_text
 
+def DES_block(text, keys):
+    my_text= []
+    for i in range(len(text)//64):
+        my_text= my_text+DES(text[i*64:(i+1)*64], keys)
+    return my_text
+
 ######################################################################## PROGRAMA
 
 
@@ -221,15 +229,15 @@ key= [0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,1,1,1,1,0,1,1,
 #key= (random_key(56))
 my_keys= key_sch(key)
 
-message= tobits('abogados') ######## mensaje a encriptar
-my_data= [0,1,0,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,0,1,1,1,0]
+#message= tobits('Problema de mínimos cuadrados') ######## mensaje a encriptar
+word= [0,1,0,0,1,1,0,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,0,1,1,1,0]
 
-ciphertext= DES(message, my_keys)
-print(f"Tcifrado", ciphertext)
-print(f"Text cifrado", frombits(ciphertext))
+ciphertext= DES_block(word, my_keys)
+print(f"Cifrado", ciphertext)
+print(f"Texto cifrado:", frombits(ciphertext))
 my_keys.reverse()
-deciphertext= DES(ciphertext, my_keys)
+deciphertext= DES_block(ciphertext, my_keys)
 
 deciphered_message= frombits(deciphertext)
-print(deciphered_message)
+print(f"Texto descifrado:", deciphered_message)
 
