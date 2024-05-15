@@ -224,8 +224,8 @@ def DES_block(text, keys):
 ######################################################################## PROGRAMA
 
 
-#key=[0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1]
-key= [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0]
+key=[0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1]
+#key= [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0]
 #key= (random_key(56))
 my_keys= key_sch(key)
 message= tobits('para el amor no hay cielo, amor, solo este día') ######## mensaje a encriptar
@@ -234,9 +234,9 @@ word= [0,1,0,0,1,1,0,1,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1
 ciphertext= DES_block(message, my_keys)
 print(f"Cifrado:", ciphertext)
 print(f"Texto cifrado:", frombits(ciphertext))
+print(f"yes")
 my_keys.reverse()
 deciphertext= DES_block(ciphertext, my_keys)
-
 deciphered_message= frombits(deciphertext)
 print(f"Texto descifrado:", deciphered_message)
 
