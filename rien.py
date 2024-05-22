@@ -224,33 +224,37 @@ def DES_block(text, keys):
 ######################################################################## PROGRAMA
 
 
-key=[0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1]
-#key= [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0]
+#key=[0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1]
+key= [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0]
 #key= (random_key(56))
 my_keys= key_sch(key)
-message= tobits('para el amor no hay cielo, amor, solo este día') ######## mensaje a encriptar
-word= [0,1,0,0,1,1,0,1,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,0,1,1,1,0]
+
+
+message= tobits('Gracias. ¿Cúal es tu nombre completo?') ######## mensaje a encriptar
+#message= [0,1,0,0,1,1,0,1,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,0,1,1,0,1,0,1,1,0,1,1,1,0,0,1,0,0,1,1,1,0]
 
 ciphertext= DES_block(message, my_keys)
-print(f"Cifrado:", ciphertext)
+#print(f"Cifrado:", ciphertext)
 print(f"Texto cifrado:", frombits(ciphertext))
-print(f"yes")
+
+
 my_keys.reverse()
 deciphertext= DES_block(ciphertext, my_keys)
 deciphered_message= frombits(deciphertext)
 print(f"Texto descifrado:", deciphered_message)
 
-def avalanche_test(message, my_keys):
-    ciphertext_1= DES(message,my_keys)
-    c=0
-    for i in range(len(message)):
-        message[i]= (message[i]+1) %2 
-        ciphertext_2=DES(message,my_keys)
-        message[i]= (message[i]+1) %2
-        for j in range(len(ciphertext_1)):
-            if (ciphertext_1[j]!= ciphertext_2[j]):
-                c+=1
-    avalanche= c/(len(message))
-    return avalanche
+#def avalanche_test(message, my_keys):
+#    ciphertext_1 = DES(message, my_keys)
+#    message_length = len(message)
+#    c=0
+#    for i in range(message_length):
+#        message[i] = (message[i] + 1) % 2
+#        ciphertext_2 = DES(message, my_keys)
+#        message[i] = (message[i] + 1) % 2
+#        for j in range(message_length):
+#            if ciphertext_1[j] != ciphertext_2[j]:
+#                c+=1
+#    avalanche= c/(message_length)
+#    return avalanche
 
-print(avalanche_test(word, my_keys))
+#print(avalanche_test(message, my_keys))
